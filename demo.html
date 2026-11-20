@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Popupblock 데모 / Demo</title>
+<link rel="icon" href="favicon.png">
+<style>
+  body { font: 16px/1.5 -apple-system, system-ui, sans-serif; margin: 0; padding: 20px; max-width: 520px; margin: 0 auto; color: #111827; }
+  h1 { font-size: 20px; }
+  p { color: #4b5563; }
+  button { display: block; width: 100%; margin: 12px 0; padding: 14px; font-size: 16px; border: 0; border-radius: 10px; background: #111827; color: #fff; }
+  #clock { font-variant-numeric: tabular-nums; font-weight: 600; }
+  small { color: #6b7280; }
+</style>
+</head>
+<body>
+<h1>Popupblock 데모 / Demo</h1>
+<p>각 버튼은 광고가 쓰는 클릭 가로채기 수법을 하나씩 재현합니다. Popupblock가 켜져 있으면 새 탭이 열리지 않고, 이 페이지도 그대로 남습니다.<br>
+<small>Each button reproduces one click-hijacking technique. With the extension on, no new tab opens and this page stays as it is.</small></p>
+<p>이 페이지가 열린 뒤 지난 시간 / Time on this page: <span id="clock">0</span>s<br>
+<small>페이지가 새로고침되면 0으로 돌아갑니다. / Resets to 0 if the page reloads.</small></p>
+
+<button id="b1">1. 누르면 다른 사이트가 새 탭으로 열림<br><small>Pop-up on tap</small></button>
+<button id="b2">2. 자기 주소로 포장한 새 탭<br><small>Wrapped redirect</small></button>
+<button id="b3">3. 새 탭에 이 페이지, 이 탭은 다른 사이트로<br><small>Tab-under</small></button>
+<button id="b4">4. 새 탭을 띄운 뒤 이 페이지 새로고침<br><small>Pop-up, then self-reload</small></button>
+
+<script>
+  // 포장 주소로 열린 경우 광고 주소로 넘김(2번 버튼 재현용)
+  (function () { var go = new URLSearchParams(location.search).get('go'); if (go) location.replace(go); })();
+  var AD = 'https://example.com/';
+  var t0 = Date.now();
+  setInterval(function () { document.getElementById('clock').textContent = Math.floor((Date.now() - t0) / 1000); }, 500);
+  document.getElementById('b1').onclick = function () { window.open(AD); };
+  document.getElementById('b2').onclick = function () { window.open(location.pathname + '?go=' + encodeURIComponent(AD)); };
+  document.getElementById('b3').onclick = function () { window.open(location.href); setTimeout(function () { location.href = AD; }, 800); };
+  document.getElementById('b4').onclick = function () { window.open(AD); setTimeout(function () { location.reload(); }, 300); };
+</script>
+</body>
+</html>
