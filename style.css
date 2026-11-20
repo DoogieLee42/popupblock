@@ -42,5 +42,9 @@ a { color: var(--blue); }
 .doc p { color: var(--secondary); }
 [lang-only] { display: none; }
 html[lang="ko"] [lang-only="ko"], html[lang="en"] [lang-only="en"] { display: block; }
+html[lang="ko"] a[lang-only="ko"], html[lang="en"] a[lang-only="en"] { display: inline-block; }
 .lang { font-size: 15px; }
 .copy { text-align: center; font-size: 13px; color: var(--secondary); margin-top: 40px; }
+.store { margin: 22px 0 0; }
+.store img { height: 48px; width: auto; }
+.hero .store img { width: auto; height: 48px; border-radius: 0; filter: none; }
