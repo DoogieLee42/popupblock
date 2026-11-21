@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PopupBlock 데모 / Demo</title>
-<meta name="description" content="광고가 쓰는 클릭 가로채기 수법 4가지를 버튼으로 재현합니다. Safari에서 PopupBlock이 새 탭과 페이지 이동을 막는지 직접 확인해 보세요.">
+<meta name="description" content="광고가 쓰는 클릭 가로채기 수법 5가지를 버튼으로 재현합니다. Safari에서 PopupBlock이 새 탭과 페이지 이동을 막는지 직접 확인해 보세요.">
 <link rel="canonical" href="https://getpopupblock.app/demo.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PopupBlock">
 <meta property="og:title" content="PopupBlock 데모 - 팝업 차단 직접 해 보기">
-<meta property="og:description" content="광고가 쓰는 클릭 가로채기 수법 4가지를 버튼으로 재현합니다. Safari에서 PopupBlock이 새 탭과 페이지 이동을 막는지 직접 확인해 보세요.">
+<meta property="og:description" content="광고가 쓰는 클릭 가로채기 수법 5가지를 버튼으로 재현합니다. Safari에서 PopupBlock이 새 탭과 페이지 이동을 막는지 직접 확인해 보세요.">
 <meta property="og:url" content="https://getpopupblock.app/demo.html">
 <meta property="og:image" content="https://getpopupblock.app/icon.png">
 <meta property="og:locale" content="ko_KR">
@@ -57,6 +57,8 @@
 <p class="result" id="r3"></p>
 <button id="b4">4. 새 탭을 띄운 뒤 이 페이지 새로고침 <span class="tier free">새 창: 무료</span> <span class="tier pro">새로고침: Pro</span><br><small>Pop-up (Free), then self-reload (Pro)</small></button>
 <p class="result" id="r4"></p>
+<button id="b5">5. 잠시 뒤 이 탭이 저절로 광고로 넘어감 <span class="tier pro">Pro</span><br><small>Landing hijack (auto-redirect after the page loads) · Pro</small></button>
+<p class="result" id="r5"></p>
 
 <script>
   // 포장 주소로 열린 경우 광고 주소로 넘김(2번 버튼 재현용)
@@ -68,6 +70,8 @@
   document.getElementById('b2').onclick = function () { window.open(location.pathname + '?go=' + encodeURIComponent(AD)); };
   document.getElementById('b3').onclick = function () { window.open(location.href); setTimeout(function () { location.href = AD; }, 800); };
   document.getElementById('b4').onclick = function () { window.open(AD); setTimeout(function () { location.reload(); }, 300); };
+  // 5번: 누른 직후가 아니라 잠시 뒤(사람의 조작과 무관해진 뒤) 페이지가 스스로 다른 사이트로 넘어감
+  document.getElementById('b5').onclick = function () { setTimeout(function () { location.href = AD; }, 1500); };
 </script>
 
 <script>
@@ -83,8 +87,8 @@
     var fromApp = q.get('check') === '1';
     var T = ko ? {
       checking: '확인 중…',
-      planBasic: '지금은 <b style="display:inline">무료(기본 차단)</b> 상태입니다. 1번은 완전히, 4번은 새 창까지 막고, 2·3번과 4번의 새로고침 방지는 Pro 기능이라 무료에서는 그대로 열리는 게 정상입니다. 앱에서 7일 무료 체험을 시작하면 모두 시험해 볼 수 있어요.',
-      planPro: '<b style="display:inline">Pro</b>가 켜져 있어 4가지 모두 막습니다.',
+      planBasic: '지금은 <b style="display:inline">무료(기본 차단)</b> 상태입니다. 1번은 완전히, 4번은 새 창까지 막고, 2·3·5번과 4번의 새로고침 방지는 Pro 기능이라 무료에서는 그대로 열리는 게 정상입니다. 앱에서 7일 무료 체험을 시작하면 모두 시험해 볼 수 있어요.',
+      planPro: '<b style="display:inline">Pro</b>가 켜져 있어 5가지 모두 막습니다.',
       on: 'PopupBlock이 이 페이지에서 작동 중입니다',
       onSub: '아래 버튼을 눌러 새 탭이 막히는지 시험해 보세요.' + (fromApp ? ' 확인이 끝났으면 PopupBlock 앱으로 돌아가도 됩니다.' : ''),
       off: 'PopupBlock이 이 사이트에서 꺼져 있습니다',
@@ -98,8 +102,8 @@
       notSafari: 'iPhone이나 iPad의 Safari에서 이 페이지를 열어 주세요. 다른 브라우저나 앱 안의 브라우저에서는 PopupBlock이 동작하지 않습니다.'
     } : {
       checking: 'Checking…',
-      planBasic: 'You are on <b style="display:inline">Free (Basic)</b>. It fully blocks #1 and the pop-up in #4. #2, #3 and the reload in #4 are Pro features, so on Free they still go through. Start the 7-day free trial in the app to try them all.',
-      planPro: '<b style="display:inline">Pro</b> is on, so all four are blocked.',
+      planBasic: 'You are on <b style="display:inline">Free (Basic)</b>. It fully blocks #1 and the pop-up in #4. #2, #3, #5 and the reload in #4 are Pro features, so on Free they still go through. Start the 7-day free trial in the app to try them all.',
+      planPro: '<b style="display:inline">Pro</b> is on, so all five are blocked.',
       on: 'PopupBlock is working on this page',
       onSub: 'Tap the buttons below to see new tabs get blocked.' + (fromApp ? ' When you are done, you can go back to the PopupBlock app.' : ''),
       off: 'PopupBlock is turned off for this site',
@@ -167,6 +171,8 @@
       ok4: '✅ 새 창과 새로고침을 모두 막았습니다 (시간이 이어집니다)',
       half4: '◐ 새 창은 막았고, 페이지가 새로고침됐습니다',
       bad4: '❌ 새 창이 열리고 페이지가 새로고침됐습니다',
+      ok5: '✅ 페이지가 저절로 광고로 넘어가는 것을 막았습니다',
+      bad5: '❌ 이 탭이 저절로 다른 사이트로 넘어갔습니다',
       proOnly: ' · Pro 기능이라 무료에서는 정상입니다'
     } : {
       ok1: '✅ Pop-up blocked', bad1: '❌ A new window opened',
@@ -177,6 +183,8 @@
       ok4: '✅ Pop-up and reload both blocked (the timer keeps going)',
       half4: '◐ Pop-up blocked, but the page reloaded',
       bad4: '❌ A pop-up opened and the page reloaded',
+      ok5: '✅ Blocked the page from sending itself to an ad',
+      bad5: '❌ This tab sent itself to another site',
       proOnly: ' · This is a Pro feature, so it is expected on Free'
     };
     var KEY = 'pb-demo-pending';
@@ -192,7 +200,7 @@
     document.addEventListener('popupblock:blocked', function (e) {
       if (!current) return;
       try { kinds.push(JSON.parse(e.detail).kind); } catch (_) {}
-      if (current === 3 || current === 4) save(current); // 페이지가 바뀌기 전에 지금까지의 결과를 남김
+      if (current >= 3) save(current); // 페이지가 바뀌기 전에 지금까지의 결과를 남김
     });
     // 버튼의 동작보다 먼저 실행되도록 캡처 단계에서 시작 표시
     document.addEventListener('click', function (e) {
@@ -201,8 +209,8 @@
       var n = +b.id.slice(1);
       current = n; kinds = [];
       show(n, '', '…');
-      if (n === 3 || n === 4) save(n);
-      var wait = n === 3 ? 2000 : n === 4 ? 1200 : 900;
+      if (n >= 3) save(n);
+      var wait = n === 3 ? 2000 : n === 4 ? 1200 : n === 5 ? 2500 : 900;
       setTimeout(function () {
         var has = function (k) { return kinds.indexOf(k) >= 0; };
         if (n === 1) show(1, has('popup') ? 'ok' : 'bad', has('popup') ? L.ok1 : L.bad1);
@@ -221,6 +229,11 @@
           else if (has('popup')) show(4, 'warn', L.half4 + (free() ? L.proOnly : ''));
           else show(4, 'bad', L.bad4);
         }
+        if (n === 5) {
+          clear();
+          if (has('redirect')) show(5, 'ok', L.ok5);
+          else show(5, 'bad', L.bad5 + (free() ? L.proOnly : ''));
+        }
         current = null;
       }, wait);
     }, true);
@@ -237,6 +250,7 @@
           if (k.indexOf('dup') >= 0) show(3, 'warn', L.dup3);
           else show(3, 'bad', L.bad3 + (free() ? L.proOnly : ''));
         }
+        if (p.n === 5) show(5, 'bad', L.bad5 + (free() ? L.proOnly : ''));
         if (p.n === 4) {
           if (k.indexOf('popup') >= 0) show(4, 'warn', L.half4 + (free() ? L.proOnly : ''));
           else show(4, 'bad', L.bad4);
