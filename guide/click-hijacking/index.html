@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>영상 재생 버튼을 누르면 다른 사이트로 넘어갈 때</title>
+<meta name="description" content="재생 버튼만 누르면 광고 사이트가 열리고 영상은 재생되지 않나요? 아이폰 Safari에서 생기는 클릭 가로채기의 원리와, 영상을 끝까지 보는 방법을 정리했습니다.">
+<link rel="canonical" href="https://getpopupblock.app/guide/click-hijacking/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="PopupBlock">
+<meta property="og:title" content="영상 재생 버튼을 누르면 다른 사이트로 넘어갈 때">
+<meta property="og:description" content="재생 버튼만 누르면 광고 사이트가 열리고 영상은 재생되지 않나요? 아이폰 Safari에서 생기는 클릭 가로채기의 원리와, 영상을 끝까지 보는 방법을 정리했습니다.">
+<meta property="og:url" content="https://getpopupblock.app/guide/click-hijacking/">
+<meta property="og:image" content="https://getpopupblock.app/icon.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary">
+<meta name="apple-itunes-app" content="app-id=6837265236, affiliate-data=pt=129834362&amp;ct=guide-banner-click-hijacking">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="guide">
+  <nav><a class="home" href="/"><img src="/icon.png" alt="">PopupBlock</a><a href="/guide/">도움말</a></nav>
+  <article>
+<p class="meta">도움말 · 2026-11-21</p>
+<h1>영상 재생 버튼을 누르면 다른 사이트로 넘어갈 때</h1>
+<p class="intro">재생 버튼을 눌렀는데 영상 대신 쇼핑몰이 열립니다. 돌아와서 다시 누르면 또 다른 광고가 열립니다. 서너 번을 눌러야 겨우 재생되는 사이트도 있습니다.</p>
+
+<h2>재생 버튼 위에 다른 버튼이 덮여 있습니다</h2>
+<p>이런 사이트는 영상 위에 <b>눈에 보이지 않는 투명한 층</b>을 깔아 둡니다. 여러분은 재생 버튼을 누른다고 생각하지만, 손가락이 실제로 닿는 것은 그 위의 투명한 광고 링크입니다. 이것을 <b>클릭 가로채기</b>라고 부릅니다.</p>
+<p>투명한 층은 한 번 눌리면 사라지거나, 몇 번 눌린 뒤에야 사라지도록 만들어져 있습니다. 그래서 "몇 번 누르면 결국 재생된다"는 경험을 하게 됩니다. 사이트는 그동안 광고 횟수만큼 수익을 얻습니다.</p>
+
+<h2>Safari 팝업 차단으로 막히지 않는 이유</h2>
+<div class="card"><p>Safari의 팝업 차단은 <b>사용자가 화면을 누른 직후 열리는 창은 열어 줍니다</b>. 로그인·결제 창이 같은 방식으로 열리기 때문입니다. 투명한 층을 누른 것도 "사용자가 누른 것"이어서, 설정에서 팝업 차단을 켜도 광고가 열립니다.</p></div>
+
+<h2>지금 바로 할 수 있는 요령</h2>
+<div class="card"><ol>
+  <li><span><b>광고 탭은 바로 닫고 돌아오기</b><br>열린 광고 탭에서는 아무것도 누르지 말고 닫습니다. "확인", "허용" 같은 버튼은 특히 누르지 마세요.</span></li>
+  <li><span><b>새 탭이 열려도 원래 탭으로 돌아와 같은 자리를 다시 누르기</b><br>투명한 층은 보통 한두 번 눌리면 사라집니다. 광고 탭을 닫고 돌아와 같은 자리를 다시 누르면 그때 재생되는 경우가 많습니다.</span></li>
+  <li><span><b>전체 화면 버튼부터 누르기</b><br>일부 플레이어는 전체 화면으로 바꾸면 투명한 층 밖으로 나와서 바로 재생됩니다.</span></li>
+  <li><span><b>같은 영상을 공식 서비스에서 찾기</b><br>공식 서비스에는 이런 광고가 없습니다. 가장 확실한 방법입니다.</span></li>
+</ol></div>
+
+<h2>매번 누르기 싫다면</h2>
+<p>투명한 층을 누른 순간 <b>정말 링크를 누른 것인지</b>를 판단해서 막아 주는 Safari 확장 프로그램을 쓰면, 첫 번째 누름에 바로 재생됩니다. 배너 광고를 지우는 일반 광고 차단기는 광고 주소 목록으로 막기 때문에, 사이트가 주소를 자주 바꾸면 놓치기 쉽습니다.</p>
+
+<div class="cta">
+  <img src="/icon.png" alt="" class="cta-icon">
+  <p class="cta-title">PopupBlock</p>
+  <p class="cta-text">누르지 않은 광고 새 창과 탭 바꿔치기를 Safari에서 막는 확장 프로그램입니다. 직접 누른 링크와 로그인·결제 창은 그대로 열립니다. 개인정보는 수집하지 않습니다.</p>
+  <p class="store"><a href="https://apps.apple.com/app/id6837265236?pt=129834362&amp;ct=guide-click-hijacking&amp;mt=8"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ko-kr" alt="App Store에서 다운로드" height="48"></a></p>
+  <p class="cta-sub"><a href="/demo.html">데모 페이지에서 직접 확인해 보기 →</a></p>
+</div>
+
+
+<p>PopupBlock은 투명한 층과 아무 데나 눌러도 뜨는 광고 새 창을 <b>무료로</b> 막습니다. 누르는 순간 주소를 바꿔치기하는 링크, 차단 뒤 새로고침으로 영상을 처음으로 돌리는 수법까지 막으려면 Pro가 필요하며 처음 7일은 무료로 써 볼 수 있습니다.</p>
+
+<h2>함께 보면 좋은 글</h2>
+<div class="card">
+  <p><a href="/guide/reload-after-block/">광고 창을 닫으면 영상이 처음부터 다시 시작될 때</a></p>
+  <p><a href="/guide/tab-under/">보던 페이지가 갑자기 광고 페이지로 바뀔 때</a></p>
+  <p><a href="/guide/popup-block-not-working/">Safari 팝업 차단을 켰는데도 광고 창이 뜨는 이유</a></p>
+</div>
+
+  </article>
+  <p class="copy"><a href="/">PopupBlock</a> · <a href="/guide/">도움말</a> · <a href="/privacy.html">개인정보 처리방침</a><br>© 2026 Doogie Lee</p>
+</main>
+</body>
+</html>
