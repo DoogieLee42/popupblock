@@ -23,12 +23,20 @@
   button { display: block; width: 100%; margin: 12px 0; padding: 14px; font-size: 16px; border: 0; border-radius: 10px; background: #111827; color: #fff; }
   #clock { font-variant-numeric: tabular-nums; font-weight: 600; }
   small { color: #6b7280; }
+  .status { border-radius: 12px; padding: 14px 16px; margin: 0 0 16px; font-size: 15px; line-height: 1.45; }
+  .status b { display: block; font-size: 16px; margin-bottom: 4px; }
+  .status ol { margin: 8px 0 0; padding-left: 20px; }
+  .status li { margin: 3px 0; }
+  .status.on { background: #e8f7ee; color: #14532d; }
+  .status.off, .status.none { background: #fff4e5; color: #7c2d12; }
+  .status.check { background: #f3f4f6; color: #374151; }
   .store { margin: 4px 0 8px; }
   .store img { display: block; }
 </style>
 </head>
 <body>
 <h1>PopupBlock 데모 / Demo</h1>
+<div id="status" class="status check" role="status"></div>
 <p>각 버튼은 광고가 쓰는 클릭 가로채기 수법을 하나씩 재현합니다. PopupBlock이 켜져 있으면 새 탭이 열리지 않고, 이 페이지도 그대로 남습니다.<br>
 <small>Each button reproduces one click-hijacking technique. With the extension on, no new tab opens and this page stays as it is.</small></p>
 <p class="store"><a href="https://apps.apple.com/app/id6837265236?pt=129834362&amp;ct=site-demo&amp;mt=8"><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ko-kr" alt="App Store에서 다운로드 / Download on the App Store" height="44"></a></p>
@@ -50,6 +58,81 @@
   document.getElementById('b2').onclick = function () { window.open(location.pathname + '?go=' + encodeURIComponent(AD)); };
   document.getElementById('b3').onclick = function () { window.open(location.href); setTimeout(function () { location.href = AD; }, 800); };
   document.getElementById('b4').onclick = function () { window.open(AD); setTimeout(function () { location.reload(); }, 300); };
+</script>
+
+<script>
+  // ── PopupBlock이 이 페이지에서 작동 중인지 표시 ──
+  // 확장은 'popupblock:ping'에 'popupblock:pong'(상태: pending/off/basic/pro, 구버전은 값 없음)으로 응답함
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var ko = q.get('lang') ? q.get('lang') === 'ko' : (navigator.language || '').toLowerCase().indexOf('ko') === 0;
+    var ua = navigator.userAgent;
+    var device = /iPhone|iPod/.test(ua) ? 'iphone'
+      : (/iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) ? 'ipad'
+      : /Macintosh/.test(ua) ? 'mac' : 'other';
+    var fromApp = q.get('check') === '1';
+    var T = ko ? {
+      checking: '확인 중…',
+      on: 'PopupBlock이 이 페이지에서 작동 중입니다',
+      onSub: '아래 버튼을 눌러 새 탭이 막히는지 시험해 보세요.' + (fromApp ? ' 확인이 끝났으면 PopupBlock 앱으로 돌아가도 됩니다.' : ''),
+      off: 'PopupBlock이 이 사이트에서 꺼져 있습니다',
+      offSub: (device === 'ipad' ? '주소창의 확장 프로그램 버튼(새로고침 옆)' : '주소창의 페이지 메뉴') + ' › PopupBlock에서 <b style="display:inline">이 사이트에서 차단</b>과 <b style="display:inline">모든 사이트에서 차단</b>을 켜 주세요.',
+      none: 'PopupBlock이 아직 이 페이지에서 작동하지 않아요',
+      steps: [
+        '<b style="display:inline">설정</b> 앱 › 앱 › Safari › 확장 프로그램에서 <b style="display:inline">PopupBlock</b>을 켭니다.',
+        device === 'ipad' ? '이 페이지에서 주소창 오른쪽 <b style="display:inline">새로고침 옆의 확장 프로그램 버튼</b>을 누릅니다.' : '이 페이지에서 주소창의 <b style="display:inline">페이지 메뉴</b> 버튼을 누릅니다.',
+        '<b style="display:inline">PopupBlock</b> › <b style="display:inline">항상 허용</b> › <b style="display:inline">모든 웹사이트에서 항상 허용</b>을 고른 뒤 이 페이지를 새로고침합니다.'
+      ],
+      notSafari: 'iPhone이나 iPad의 Safari에서 이 페이지를 열어 주세요. 다른 브라우저나 앱 안의 브라우저에서는 PopupBlock이 동작하지 않습니다.'
+    } : {
+      checking: 'Checking…',
+      on: 'PopupBlock is working on this page',
+      onSub: 'Tap the buttons below to see new tabs get blocked.' + (fromApp ? ' When you are done, you can go back to the PopupBlock app.' : ''),
+      off: 'PopupBlock is turned off for this site',
+      offSub: 'Open ' + (device === 'ipad' ? 'the Extensions button next to Reload' : 'the page menu in the address bar') + ' › PopupBlock and turn on <b style="display:inline">Block on This Site</b> and <b style="display:inline">Block on All Sites</b>.',
+      none: 'PopupBlock is not running on this page yet',
+      steps: [
+        'In <b style="display:inline">Settings › Apps › Safari › Extensions</b>, turn on <b style="display:inline">PopupBlock</b>.',
+        device === 'ipad' ? 'On this page, tap the <b style="display:inline">Extensions button next to Reload</b> in the address bar.' : 'On this page, tap the <b style="display:inline">page menu</b> button in the address bar.',
+        'Tap <b style="display:inline">PopupBlock</b> › <b style="display:inline">Always Allow</b> › <b style="display:inline">Always Allow on Every Website</b>, then reload this page.'
+      ],
+      notSafari: 'Open this page in Safari on iPhone or iPad. PopupBlock does not run in other browsers or in-app browsers.'
+    };
+    var box = document.getElementById('status');
+    function ping() {
+      var got = null;
+      var h = function (e) { got = (e && e.detail) || 'on'; };
+      document.addEventListener('popupblock:pong', h);
+      document.dispatchEvent(new CustomEvent('popupblock:ping'));
+      document.removeEventListener('popupblock:pong', h);
+      return got;
+    }
+    function render(level) {
+      if (level && level !== 'off') {
+        box.className = 'status on';
+        box.innerHTML = '<b>✅ ' + T.on + '</b>' + T.onSub;
+      } else if (level === 'off') {
+        box.className = 'status off';
+        box.innerHTML = '<b>⏸ ' + T.off + '</b>' + T.offSub;
+      } else {
+        box.className = 'status none';
+        var isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|GSA|NAVER|KAKAOTALK|Instagram|FBAN|Line/.test(ua);
+        box.innerHTML = '<b>⚠️ ' + T.none + '</b>' +
+          (device === 'iphone' || device === 'ipad'
+            ? (isSafari ? '<ol><li>' + T.steps.join('</li><li>') + '</li></ol>' : T.notSafari)
+            : T.notSafari);
+      }
+    }
+    box.textContent = T.checking;
+    function check(tries) {
+      var level = ping();
+      // 설정이 아직 도착하지 않았으면 잠시 뒤 다시 확인
+      if ((level === 'pending' || !level) && tries > 0) { setTimeout(function () { check(tries - 1); }, 600); return; }
+      render(level === 'pending' ? 'on' : level);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { check(3); });
+    else check(3);
+  })();
 </script>
 </body>
 </html>
