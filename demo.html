@@ -207,8 +207,20 @@
         var has = function (k) { return kinds.indexOf(k) >= 0; };
         if (n === 1) show(1, has('popup') ? 'ok' : 'bad', has('popup') ? L.ok1 : L.bad1);
         if (n === 2) show(2, has('popup') ? 'ok' : 'bad', has('popup') ? L.ok2 : L.bad2 + (free() ? L.proOnly : ''));
-        if (n === 3) { clear(); show(3, 'ok', L.ok3); }     // 여기까지 왔으면 이 탭이 그대로 남은 것
-        if (n === 4) { clear(); show(4, 'ok', L.ok4); }     // 새로고침되지 않고 남은 것
+        // 3·4번은 확장이 이동/새로고침을 '시작 전에 취소'했다는 신호가 있어야 성공으로 봄.
+        // (Safari가 뒤로 가기로 페이지를 되살리면 이 타이머도 이어서 실행되므로, 남아 있다는 것만으로는 판단하지 않음)
+        if (n === 3) {
+          clear();
+          if (has('redirect')) show(3, 'ok', L.ok3);
+          else if (has('dup')) show(3, 'warn', L.dup3);
+          else show(3, 'bad', L.bad3 + (free() ? L.proOnly : ''));
+        }
+        if (n === 4) {
+          clear();
+          if (has('reload')) show(4, 'ok', L.ok4);
+          else if (has('popup')) show(4, 'warn', L.half4 + (free() ? L.proOnly : ''));
+          else show(4, 'bad', L.bad4);
+        }
         current = null;
       }, wait);
     }, true);
