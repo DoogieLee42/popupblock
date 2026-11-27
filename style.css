@@ -70,3 +70,6 @@ html[lang="ko"] a[lang-only="ko"], html[lang="en"] a[lang-only="en"] { display: 
 .post-desc { display: block; color: var(--secondary); font-size: 15px; margin-top: 2px; }
 .copy a { color: var(--secondary); }
 .guide article h3.sub { font-size: 17px; margin: 18px 0 6px; }
+.shots { display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 14px; margin: 0 -2px 6px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.shots img { flex: 0 0 auto; width: 46%; max-width: 230px; height: auto; border-radius: 22px; scroll-snap-align: start; box-shadow: 0 6px 18px rgba(0,0,0,.18); }
+@media (min-width: 560px) { .shots img { width: 31%; } }
